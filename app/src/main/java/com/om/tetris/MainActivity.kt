@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun startGameLoop() {
-    val runAsyncTask = object : TimerTask() {
+    val gameTimerTask = object : TimerTask() {
       override fun run() {
         runOnUiThread {
           tetris.loop()
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    timer.schedule(runAsyncTask, 0, 20)
+    timer.schedule(gameTimerTask, 0, 20)
   }
 
   fun stopGameLoop() {
