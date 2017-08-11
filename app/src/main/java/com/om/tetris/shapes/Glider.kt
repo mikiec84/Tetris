@@ -2,9 +2,7 @@ package com.om.tetris.shapes
 
 import android.graphics.Rect
 
-class Glider {
-  val cells = ArrayList<Rect>()
-
+class Glider : TetrisBlock() {
   val cellWidth = 50
   val cellHeight = 50
 

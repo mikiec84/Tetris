@@ -2,9 +2,7 @@ package com.om.tetris.shapes
 
 import android.graphics.Rect
 
-class Stick {
-  val cells = ArrayList<Rect>()
-
+class Stick : TetrisBlock() {
   val cellWidth = 50
   val cellHeight = 50
 

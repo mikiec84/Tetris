@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-  lateinit var tetris: Tetris
+  var tetris: Tetris? = null
 
   var gameStarted = false
 
@@ -16,18 +16,36 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    addGameView()
+
     mainContentLayout.post {
-      tetris = Tetris(this, mainContentLayout)
-
-      mainContentLayout.addView(tetris)
-
       mainContentLayout.setOnClickListener {
-        if (gameStarted)
+        if (gameStarted) {
           stopGameLoop()
-        else
+          removeGameView()
+        } else {
+          addGameView()
           startGameLoop()
+        }
       }
     }
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    stopGameLoop()
+  }
+
+  fun addGameView() {
+    if (tetris == null) {
+      tetris = Tetris(this)
+      mainContentLayout.addView(tetris)
+    }
+  }
+
+  fun removeGameView() {
+    mainContentLayout.removeView(tetris)
+    tetris = null
   }
 
   fun startGameLoop() {
@@ -35,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     val gameTimerTask = object : TimerTask() {
       override fun run() {
         runOnUiThread {
-          tetris.loop()
+          tetris?.loop()
         }
       }
     }
@@ -47,10 +65,5 @@ class MainActivity : AppCompatActivity() {
   fun stopGameLoop() {
     timer.cancel()
     gameStarted = false
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    stopGameLoop()
   }
 }

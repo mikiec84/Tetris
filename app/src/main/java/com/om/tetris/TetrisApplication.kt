@@ -1,4 +1,4 @@
-package com.om.tetris.shapes
+package com.om.tetris
 
 import android.app.Application
 import timber.log.Timber
