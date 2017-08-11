@@ -2,12 +2,13 @@ package com.om.tetris
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
   lateinit var tetris: Tetris
+
+  var gameStarted = false
 
   var timer = Timer()
 
@@ -20,15 +21,17 @@ class MainActivity : AppCompatActivity() {
 
       mainContentLayout.addView(tetris)
 
-      Log.d("Coords", "Screen height for Hassan is : " + mainContentLayout.height)
-
       mainContentLayout.setOnClickListener {
-        startGameLoop()
+        if (gameStarted)
+          stopGameLoop()
+        else
+          startGameLoop()
       }
     }
   }
 
   fun startGameLoop() {
+    timer = Timer()
     val gameTimerTask = object : TimerTask() {
       override fun run() {
         runOnUiThread {
@@ -38,10 +41,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     timer.schedule(gameTimerTask, 0, 20)
+    gameStarted = true
   }
 
   fun stopGameLoop() {
     timer.cancel()
+    gameStarted = false
   }
 
   override fun onDestroy() {

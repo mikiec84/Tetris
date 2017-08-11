@@ -13,6 +13,11 @@ android {
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
+
+  repositories {
+    mavenCentral()
+  }
+
   buildTypes {
     release {
       minifyEnabled false
@@ -29,8 +34,8 @@ dependencies {
   compile 'com.android.support:appcompat-v7:25.3.1'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   testCompile 'junit:junit:4.12'
+
   compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
-repositories {
-  mavenCentral()
+
+  compile 'com.jakewharton.timber:timber:4.5.1'
 }

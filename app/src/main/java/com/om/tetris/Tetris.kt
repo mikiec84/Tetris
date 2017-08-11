@@ -7,24 +7,50 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import android.widget.RelativeLayout
+import com.om.tetris.shapes.Box
+import com.om.tetris.shapes.Glider
+import com.om.tetris.shapes.Stick
+import com.om.tetris.shapes.ZBlock
+import java.util.*
 
 class Tetris(context: Context, mainContentLayout: RelativeLayout) : View(context) {
 
-  val painter: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    strokeWidth = 10f
-    style = Paint.Style.FILL
+  val box = Box()
+  val glider = Glider()
+  val zBlock = ZBlock()
+  val stick = Stick()
+
+  val randomBlock: Int
+  val painter: Paint
+
+  val screenWidth: Int
+  val screenHeight: Int
+
+  val loweringSpeed = 10
+
+  init {
+    painter = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+      strokeWidth = 10f
+      style = android.graphics.Paint.Style.FILL
+    }
+
+    screenWidth = mainContentLayout.width
+    screenHeight = mainContentLayout.height
+
+    randomBlock = Random().nextInt(4 - 1) + 1
   }
-
-  val screenHeight = mainContentLayout.height
-  val screenWidth = mainContentLayout.width
-
-  val block = Rect((screenWidth - 200) / 2, 50, (screenWidth + 200) / 2, 200)
 
   override fun onDraw(canvas: Canvas?) {
     super.onDraw(canvas)
 
     painter.color = Color.RED
-    canvas?.drawRect(block, painter)
+
+    when (randomBlock) {
+      1 -> glider.cells.forEach { canvas?.drawRect(it, painter) }
+      2 -> box.cells.forEach { canvas?.drawRect(it, painter) }
+      3 -> zBlock.cells.forEach { canvas?.drawRect(it, painter) }
+      4 -> stick.cells.forEach { canvas?.drawRect(it, painter) }
+    }
   }
 
   fun loop() {
@@ -32,15 +58,41 @@ class Tetris(context: Context, mainContentLayout: RelativeLayout) : View(context
   }
 
   fun render() {
-    if (Math.abs(block.bottom - screenHeight) > 15) {
-      block.top += 15
-      block.bottom += 15
+    when (randomBlock) {
+      1 -> moveBlock(glider.cells, 'D')
+      2 -> moveBlock(box.cells, 'D')
+      3 -> moveBlock(zBlock.cells, 'D')
+      4 -> moveBlock(stick.cells, 'D')
     }
 
     invalidate()
   }
 
-  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-    super.onLayout(changed, left, top, right, bottom)
+  fun moveBlock(cells: ArrayList<Rect>, direction: Char) = when (direction) {
+    'L' -> {
+      cells.forEach {
+        it.right -= loweringSpeed
+        it.left -= loweringSpeed
+      }
+    }
+    'R' -> {
+      cells.forEach {
+        it.right += loweringSpeed
+        it.left += loweringSpeed
+      }
+    }
+    'U' -> {
+      cells.forEach {
+        it.top -= loweringSpeed
+        it.bottom -= loweringSpeed
+      }
+    }
+    'D' -> {
+      cells.forEach {
+        it.top += loweringSpeed
+        it.bottom += loweringSpeed
+      }
+    }
+    else -> throw Exception("Invalid move, choose from 'L', 'R', 'U', 'D'")
   }
 }
