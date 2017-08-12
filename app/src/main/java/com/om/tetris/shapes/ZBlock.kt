@@ -2,7 +2,7 @@ package com.om.tetris.shapes
 
 import android.graphics.Rect
 
-class ZBlock : TetrisBlock() {
+class ZBlock(screenWidth: Int) : TetrisBlock() {
   val cellWidth = 50
   val cellHeight = 50
 

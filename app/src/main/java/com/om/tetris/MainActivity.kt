@@ -16,9 +16,11 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    addGameView()
 
     mainContentLayout.post {
+
+      addGameView()
+
       mainContentLayout.setOnClickListener {
         if (gameStarted) {
           stopGameLoop()
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
   fun addGameView() {
     if (tetris == null) {
-      tetris = Tetris(this)
+      tetris = Tetris(this, mainContentLayout)
       mainContentLayout.addView(tetris)
     }
   }

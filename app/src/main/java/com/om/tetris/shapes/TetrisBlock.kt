@@ -15,13 +15,13 @@ open class TetrisBlock {
     color = Color.RED
   }
 
-  fun getBlock() =
+  fun getBlock(screenWidth: Int) =
       when (Random().nextInt(5) + 1) {
-        1 -> Box()
-        2 -> ZBlock()
-        3 -> Stick()
-        4 -> Glider()
-        5 -> TBlock()
+        1 -> Box(screenWidth)
+        2 -> ZBlock(screenWidth)
+        3 -> Stick(screenWidth)
+        4 -> Glider(screenWidth)
+        5 -> TBlock(screenWidth)
         else -> TODO()
       }
 
