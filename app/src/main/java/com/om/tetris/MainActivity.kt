@@ -2,50 +2,70 @@ package com.om.tetris
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-  lateinit var tetris: Tetris
+  var tetris: Tetris? = null
 
   var timer = Timer()
+
+  var gameStarted = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
     mainContentLayout.post {
-      tetris = Tetris(this, mainContentLayout)
 
-      mainContentLayout.addView(tetris)
-
-      Log.d("Coords", "Screen height for Hassan is : " + mainContentLayout.height)
+      addGameView()
 
       mainContentLayout.setOnClickListener {
-        startGameLoop()
-      }
-    }
-  }
-
-  fun startGameLoop() {
-    val gameTimerTask = object : TimerTask() {
-      override fun run() {
-        runOnUiThread {
-          tetris.loop()
+        if (gameStarted) {
+          stopGameLoop()
+          removeGameView()
+        } else {
+          startGameLoop()
+          addGameView()
         }
       }
     }
-
-    timer.schedule(gameTimerTask, 0, 20)
-  }
-
-  fun stopGameLoop() {
-    timer.cancel()
   }
 
   override fun onDestroy() {
     super.onDestroy()
     stopGameLoop()
+  }
+
+  fun addGameView() {
+    if (tetris == null) {
+      tetris = Tetris(this)
+      mainContentLayout.addView(tetris)
+    }
+  }
+
+  fun removeGameView() {
+    mainContentLayout.removeView(tetris)
+    tetris = null
+  }
+
+  fun startGameLoop() {
+    timer = Timer()
+
+    val gameTimerTask = object : TimerTask() {
+      override fun run() {
+        runOnUiThread {
+          tetris?.loop()
+        }
+      }
+    }
+
+    timer.schedule(gameTimerTask, 0, 20)
+    gameStarted = true
+  }
+
+  fun stopGameLoop() {
+    timer.cancel()
+    gameStarted = false
   }
 }
