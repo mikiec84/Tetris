@@ -1,15 +1,10 @@
 package com.om.tetris.shapes
 
-import android.graphics.Rect
-
-class Stick(screenWidth: Int) : TetrisBlock() {
-  val cellWidth = 50
-  val cellHeight = 50
-
-  val whole: Rect
-
+class Stick(coords: Pair<Int, Int>) : TetrisBlock() {
   init {
-    whole = Rect(0, 0, cellWidth, cellHeight * 4)
-    cells.add(whole)
+    screenGrid[coords.first][coords.second] = 1
+    screenGrid[coords.first + 1][coords.second] = 1
+    screenGrid[coords.first + 2][coords.second] = 1
+    screenGrid[coords.first + 3][coords.second] = 1
   }
 }

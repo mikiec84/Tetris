@@ -1,19 +1,10 @@
 package com.om.tetris.shapes
 
-import android.graphics.Rect
-
-class Box(screenWidth: Int) : TetrisBlock() {
-  val cellWidth = 50
-  val cellHeight = 50
-
-  val upper: Rect
-  val lower: Rect
-
+class Box(coords: Pair<Int, Int>) : TetrisBlock() {
   init {
-    upper = Rect(0, 0, cellWidth * 2, cellHeight)
-    cells.add(upper)
-
-    lower = Rect(0, cellHeight, cellWidth * 2, cellHeight * 2)
-    cells.add(lower)
+    screenGrid[coords.first][coords.second] = 1
+    screenGrid[coords.first][coords.second + 1] = 1
+    screenGrid[coords.first + 1][coords.second] = 1
+    screenGrid[coords.first + 1][coords.second + 1] = 1
   }
 }

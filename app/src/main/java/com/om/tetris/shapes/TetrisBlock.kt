@@ -9,24 +9,39 @@ import java.util.*
 open class TetrisBlock {
   val cells = ArrayList<Rect>()
   val loweringSpeed = 10
+  val screenGrid = array2dOfInt(20, 40)
+
+  val cellWidth = 60
+  val cellHeight = 60
+
+  lateinit var currentBlock: TetrisBlock
 
   val painter = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
     style = android.graphics.Paint.Style.FILL
     color = Color.RED
   }
 
-  fun getBlock(screenWidth: Int) =
+  fun getBlock() =
       when (Random().nextInt(5) + 1) {
-        1 -> Box(screenWidth)
-        2 -> ZBlock(screenWidth)
-        3 -> Stick(screenWidth)
-        4 -> Glider(screenWidth)
-        5 -> TBlock(screenWidth)
+        1 -> Box(Pair(0, 8))
+        2 -> ZBlock(Pair(0, 8))
+        3 -> Stick(Pair(0, 8))
+        4 -> Glider(Pair(0, 8))
+        5 -> TBlock(Pair(0, 8))
         else -> TODO()
       }
 
   fun draw(canvas: Canvas) {
-    cells.forEach { canvas.drawRect(it, painter) }
+    screenGrid.forEachIndexed { rowIndex, ints ->
+      ints.forEachIndexed { columnIndex, integer ->
+        if (integer == 1) {
+          canvas.drawRect(
+              Rect(columnIndex * cellWidth, rowIndex * cellHeight,
+                  (columnIndex * cellWidth) + cellWidth, (rowIndex * cellHeight) + cellHeight),
+              painter)
+        }
+      }
+    }
   }
 
   fun move(direction: Char) = when (direction) {
@@ -49,11 +64,27 @@ open class TetrisBlock {
       }
     }
     'D' -> {
-      cells.forEach {
-        it.top += loweringSpeed
-        it.bottom += loweringSpeed
-      }
+//      cells.forEach {
+//        it.top += loweringSpeed
+//        it.bottom += loweringSpeed
+//      }
+//      clearGrid(screenGrid)
+      incrementCoords(screenGrid)
     }
     else -> throw Exception("Invalid move, choose from 'L', 'R', 'U', 'D'")
+  }
+
+  fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
+      = Array(sizeOuter) { IntArray(sizeInner) }
+
+  fun incrementCoords(screenGrid: Array<IntArray>) {
+    screenGrid.forEachIndexed { rowIndex, ints ->
+      ints.forEachIndexed { columnIndex, number ->
+        if (number == 1) {
+          ints[columnIndex] = 0
+          screenGrid[rowIndex][columnIndex] = 1
+        }
+      }
+    }
   }
 }

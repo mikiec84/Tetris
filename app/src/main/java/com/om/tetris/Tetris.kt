@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.om.tetris.shapes.TetrisBlock
 
-class Tetris(context: Context, mainContentLayout: RelativeLayout) : View(context) {
+class Tetris(context: Context, contentLayout: RelativeLayout) : View(context) {
 
-  var randomBlock = TetrisBlock().getBlock(mainContentLayout.width)
+  var randomBlock = TetrisBlock().getBlock()
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
