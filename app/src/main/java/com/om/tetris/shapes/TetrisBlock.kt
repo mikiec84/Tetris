@@ -18,6 +18,9 @@ open class TetrisBlock {
     color = Color.RED
   }
 
+  open fun addToGrid(coords: Pair<Int, Int>,
+      screenGrid: Array<IntArray>): Array<IntArray> = screenGrid
+
   companion object {
     private fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
         = Array(sizeOuter) { IntArray(sizeInner) }
@@ -34,8 +37,6 @@ open class TetrisBlock {
         5 -> TBlock()
         else -> TODO()
       }
-
-  fun addToGrid(coords: Pair<Int, Int>, screenGrid: Array<IntArray>): Array<IntArray> = screenGrid
 
   fun draw(canvas: Canvas) {
     screenGrid.forEachIndexed { rowIndex, ints ->

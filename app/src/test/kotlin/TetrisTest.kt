@@ -8,13 +8,19 @@ class TetrisTest {
   fun addToGridTest() {
     val box = mock<Box>()
 
-    val grid: Array<IntArray> = arrayOf(intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0), intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0), intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+    val grid: Array<IntArray> = arrayOf(
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
-    val expectedGrid: Array<IntArray> = arrayOf(intArrayOf(0, 0, 0, 0, 0, 1, 1, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 1, 1, 0, 0, 0), intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0), intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+    val expectedGrid: Array<IntArray> = arrayOf(
+        intArrayOf(0, 0, 0, 0, 0, 1, 1, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 1, 1, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
     assertTrue(twoDimenArrayEquals(expectedGrid, box.addToGrid(Pair(0, 5), grid)))
   }

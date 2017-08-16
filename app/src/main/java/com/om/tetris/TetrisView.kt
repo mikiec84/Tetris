@@ -13,7 +13,7 @@ class TetrisView(context: Context) : View(context) {
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
     //Doesn't work now
-    randomBlock.addToGrid(randomBlock, coordsPair, TetrisBlock.screenGrid)
+    randomBlock.addToGrid(coordsPair, TetrisBlock.screenGrid)
     randomBlock.draw(canvas)
   }
 
