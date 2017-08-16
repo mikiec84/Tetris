@@ -6,11 +6,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-  var tetris: Tetris? = null
+  private var tetris: TetrisView? = null
 
-  var gameStarted = false
+  private var gameStarted = false
 
-  var timer = Timer()
+  private var timer = Timer()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,19 +37,19 @@ class MainActivity : AppCompatActivity() {
     stopGameLoop()
   }
 
-  fun addGameView() {
+  private fun addGameView() {
     if (tetris == null) {
-      tetris = Tetris(this)
+      tetris = TetrisView(this)
       mainContentLayout.addView(tetris)
     }
   }
 
-  fun removeGameView() {
+  private fun removeGameView() {
     mainContentLayout.removeView(tetris)
     tetris = null
   }
 
-  fun startGameLoop() {
+  private fun startGameLoop() {
     timer = Timer()
     val gameTimerTask = object : TimerTask() {
       override fun run() {
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     gameStarted = true
   }
 
-  fun stopGameLoop() {
+  private fun stopGameLoop() {
     timer.cancel()
     gameStarted = false
   }

@@ -14,6 +14,12 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
 
+  //Essential for making Kotlin directory be treated same as test/java/etc.
+  sourceSets {
+    test.java.srcDirs += 'src/test/kotlin'
+    androidTest.java.srcDirs += 'src/androidTest/kotlin'
+  }
+
   repositories {
     mavenCentral()
   }
@@ -28,14 +34,22 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
+
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+
   compile 'com.android.support:appcompat-v7:25.3.1'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
-  testCompile 'junit:junit:4.12'
 
+  //JUnit and JUnit for Kotlin
+  testCompile 'junit:junit:4.12'
+  testCompile "com.nhaarman:mockito-kotlin:1.5.0"
+  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
+  //Kotlin STDLIB
   compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+  //Timber
   compile 'com.jakewharton.timber:timber:4.5.1'
 }

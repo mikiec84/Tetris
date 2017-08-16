@@ -13,20 +13,25 @@ open class TetrisBlock {
   private val cellWidth = 60
   private val cellHeight = 60
 
-  private val painter = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+  private val painter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
     style = android.graphics.Paint.Style.FILL
     color = Color.RED
   }
 
-  val screenGrid = array2dOfInt(20, 40)
+  companion object {
+    private fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
+        = Array(sizeOuter) { IntArray(sizeInner) }
+
+    val screenGrid = array2dOfInt(20, 40)
+  }
 
   fun getBlock() =
       when (Random().nextInt(5) + 1) {
-        1 -> Box(Pair(0, 8))
-        2 -> ZBlock(Pair(0, 8))
-        3 -> Stick(Pair(0, 8))
-        4 -> Glider(Pair(0, 8))
-        5 -> TBlock(Pair(0, 8))
+        1 -> Box()
+        2 -> ZBlock()
+        3 -> Stick()
+        4 -> Glider()
+        5 -> TBlock()
         else -> TODO()
       }
 
@@ -69,19 +74,5 @@ open class TetrisBlock {
       }
     }
     else -> throw Exception("Invalid move, choose from 'L', 'R', 'U', 'D'")
-  }
-
-  private fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
-      = Array(sizeOuter) { IntArray(sizeInner) }
-
-  fun incrementCoords(screenGrid: Array<IntArray>) {
-    screenGrid.forEachIndexed { rowIndex, ints ->
-      ints.forEachIndexed { columnIndex, number ->
-        if (number == 1) {
-          ints[columnIndex] = 0
-          screenGrid[rowIndex][columnIndex] = 1
-        }
-      }
-    }
   }
 }
