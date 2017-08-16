@@ -35,6 +35,8 @@ open class TetrisBlock {
         else -> TODO()
       }
 
+  fun addToGrid(coords: Pair<Int, Int>, screenGrid: Array<IntArray>): Array<IntArray> = screenGrid
+
   fun draw(canvas: Canvas) {
     screenGrid.forEachIndexed { rowIndex, ints ->
       ints.forEachIndexed { columnIndex, integer ->
