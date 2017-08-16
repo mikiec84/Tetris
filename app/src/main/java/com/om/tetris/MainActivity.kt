@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
   fun addGameView() {
     if (tetris == null) {
-      tetris = Tetris(this, mainContentLayout)
+      tetris = Tetris(this)
       mainContentLayout.addView(tetris)
     }
   }

@@ -7,19 +7,18 @@ import android.graphics.Rect
 import java.util.*
 
 open class TetrisBlock {
-  val cells = ArrayList<Rect>()
-  val loweringSpeed = 10
-  val screenGrid = array2dOfInt(20, 40)
+  private val cells = ArrayList<Rect>()
+  private val loweringSpeed = 10
 
-  val cellWidth = 60
-  val cellHeight = 60
+  private val cellWidth = 60
+  private val cellHeight = 60
 
-  lateinit var currentBlock: TetrisBlock
-
-  val painter = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+  private val painter = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
     style = android.graphics.Paint.Style.FILL
     color = Color.RED
   }
+
+  val screenGrid = array2dOfInt(20, 40)
 
   fun getBlock() =
       when (Random().nextInt(5) + 1) {
@@ -64,17 +63,15 @@ open class TetrisBlock {
       }
     }
     'D' -> {
-//      cells.forEach {
-//        it.top += loweringSpeed
-//        it.bottom += loweringSpeed
-//      }
-//      clearGrid(screenGrid)
-      incrementCoords(screenGrid)
+      cells.forEach {
+        it.top += loweringSpeed
+        it.bottom += loweringSpeed
+      }
     }
     else -> throw Exception("Invalid move, choose from 'L', 'R', 'U', 'D'")
   }
 
-  fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
+  private fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
       = Array(sizeOuter) { IntArray(sizeInner) }
 
   fun incrementCoords(screenGrid: Array<IntArray>) {
