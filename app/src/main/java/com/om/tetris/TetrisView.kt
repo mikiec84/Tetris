@@ -18,9 +18,12 @@ class TetrisView(context: Context) : View(context) {
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
-    //Doesn't work now
-    randomBlock.addToGrid(TetrisBlock.screenGrid)
-    randomBlock.draw(canvas, painter)
+
+    with(TetrisBlock) {
+      clearGrid(screenGrid)
+//      randomBlock.addToGrid(screenGrid)
+//      randomBlock.draw(canvas, painter)
+    }
   }
 
   fun loop() {
@@ -28,9 +31,7 @@ class TetrisView(context: Context) : View(context) {
   }
 
   private fun render() {
-//    randomBlock.move('D')
-//    randomBlock.addToGrid(Pair(i, i))
-//    i += 1
+    randomBlock.moveBlock('D')
     invalidate()
   }
 }
