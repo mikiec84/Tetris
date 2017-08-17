@@ -1,7 +1,6 @@
 package com.om.tetris.shapes
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import java.util.*
@@ -10,16 +9,18 @@ open class TetrisBlock {
   private val cells = ArrayList<Rect>()
   private val loweringSpeed = 10
 
+  lateinit var placementCoords: Array<Pair<Int, Int>>
+
   private val cellWidth = 60
   private val cellHeight = 60
 
-  private val painter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    style = android.graphics.Paint.Style.FILL
-    color = Color.RED
-  }
+  open fun addToGrid(screenGrid: Array<IntArray>): Array<IntArray> {
+    placementCoords.forEachIndexed { index, pair ->
+      screenGrid[pair.first][pair.second] = 1
+    }
 
-  open fun addToGrid(coords: Pair<Int, Int>,
-      screenGrid: Array<IntArray>): Array<IntArray> = screenGrid
+    return screenGrid
+  }
 
   companion object {
     private fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
@@ -30,15 +31,15 @@ open class TetrisBlock {
 
   fun getBlock() =
       when (Random().nextInt(5) + 1) {
-        1 -> Box()
-        2 -> ZBlock()
-        3 -> Stick()
-        4 -> Glider()
-        5 -> TBlock()
+        1 -> Box(Pair(0, 4))
+        2 -> ZBlock(Pair(0, 4))
+        3 -> Stick(Pair(0, 4))
+        4 -> Glider(Pair(0, 4))
+        5 -> TBlock(Pair(0, 4))
         else -> TODO()
       }
 
-  fun draw(canvas: Canvas) {
+  fun draw(canvas: Canvas, painter: Paint) {
     screenGrid.forEachIndexed { rowIndex, ints ->
       ints.forEachIndexed { columnIndex, integer ->
         if (integer == 1) {

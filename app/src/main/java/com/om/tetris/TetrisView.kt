@@ -2,19 +2,25 @@ package com.om.tetris
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.view.View
 import com.om.tetris.shapes.TetrisBlock
 
 class TetrisView(context: Context) : View(context) {
 
   private val randomBlock = TetrisBlock().getBlock()
-  private val coordsPair = Pair(1, 1)
+
+  private val painter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    style = android.graphics.Paint.Style.FILL
+    color = Color.RED
+  }
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
     //Doesn't work now
-    randomBlock.addToGrid(coordsPair, TetrisBlock.screenGrid)
-    randomBlock.draw(canvas)
+    randomBlock.addToGrid(TetrisBlock.screenGrid)
+    randomBlock.draw(canvas, painter)
   }
 
   fun loop() {
