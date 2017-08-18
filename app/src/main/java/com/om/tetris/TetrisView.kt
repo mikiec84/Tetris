@@ -9,20 +9,21 @@ import com.om.tetris.shapes.TetrisBlock
 
 class TetrisView(context: Context) : View(context) {
 
-  private val randomBlock = TetrisBlock().getBlock()
+  private val randomShape = TetrisBlock.getShapeGrid()
+
+  private val startingCoords = Pair(2,4)
 
   private val painter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    style = android.graphics.Paint.Style.FILL
+    style = Paint.Style.FILL
     color = Color.RED
   }
 
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
 
-    with(TetrisBlock) {
-      clearGrid(screenGrid)
-//      randomBlock.addToGrid(screenGrid)
-//      randomBlock.draw(canvas, painter)
+    with(TetrisBlock){
+    addShapeToGrid(randomShape, screenGrid, startingCoords)
+    draw(screenGrid, canvas, painter)
     }
   }
 
@@ -31,7 +32,7 @@ class TetrisView(context: Context) : View(context) {
   }
 
   private fun render() {
-    randomBlock.moveBlock('D')
+//    randomShape.moveBlock('D')
     invalidate()
   }
 }
