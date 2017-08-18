@@ -47,20 +47,20 @@ object TetrisBlock {
         else -> TODO()
       }
 
-  fun addShapeToGrid(source: Array<IntArray>,
-      screenGrid: Array<IntArray>, point: Pair<Int, Int>): Array<IntArray> {
-    val newGrid = source.clone()
+  fun addShapeToGrid(target: Array<IntArray>,
+      source: Array<IntArray>, point: Pair<Int, Int>): Array<IntArray> {
+    val newGrid = target.clone()
 
-    screenGrid.forEachIndexed { rowIndex, ints ->
+    source.forEachIndexed { rowIndex, ints ->
       ints.forEachIndexed inner@ { columnIndex, _ ->
         val target_row_idx = point.first + rowIndex
         val target_col_idx = point.second + columnIndex
 
-        if (target_row_idx >= source.size
-            || target_col_idx >= source[0].size) {
+        if (target_row_idx >= target.size
+            || target_col_idx >= target[0].size) {
           return@inner
         } else {
-          newGrid[target_row_idx][target_col_idx] = screenGrid[rowIndex][columnIndex]
+          newGrid[target_row_idx][target_col_idx] = source[rowIndex][columnIndex]
         }
       }
     }
