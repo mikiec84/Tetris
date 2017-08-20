@@ -3,11 +3,10 @@ package com.om.tetris.shapes
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import timber.log.Timber
 import java.util.*
 
 object TetrisBlock {
-  var screenGrid = array2dOfInt(20, 40)
+  var screenGrid = array2dOfInt(15, 40)
 
   private val cellWidth = 60
   private val cellHeight = 60
@@ -71,7 +70,6 @@ object TetrisBlock {
   fun draw(screenGrid: Array<IntArray>, canvas: Canvas, painter: Paint) {
     screenGrid.forEachIndexed { rowIndex, ints ->
       ints.forEachIndexed { columnIndex, integer ->
-        Timber.d("Reaching here?")
         if (integer == 1) {
           canvas.drawRect(
               Rect(columnIndex * cellWidth, rowIndex * cellHeight,

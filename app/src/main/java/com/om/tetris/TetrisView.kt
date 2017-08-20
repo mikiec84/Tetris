@@ -11,7 +11,7 @@ class TetrisView(context: Context) : View(context) {
 
   private val randomShape = TetrisBlock.getShapeGrid()
 
-  private val startingCoords = Pair(0, 0)
+  private val startingCoords = Pair(0, 8)
 
   private val painter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
     style = Paint.Style.FILL
@@ -22,8 +22,8 @@ class TetrisView(context: Context) : View(context) {
     super.onDraw(canvas)
 
     with(TetrisBlock) {
-      val newGrid = addShapeToGrid(screenGrid, randomShape, startingCoords)
-      draw(newGrid, canvas, painter)
+      addShapeToGrid(screenGrid, randomShape, startingCoords)
+      draw(screenGrid, canvas, painter)
     }
   }
 
